@@ -1,0 +1,42 @@
+:root {
+  /* typography */
+  --font-sans: 'InterVariable', system-ui, sans-serif;
+  --font-mono: 'JetBrains MonoVariable', 'Fira Code', monospace;
+
+  /* spacing scale (4px base) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+
+  /* layout */
+  --max-width: 720px;
+  --radius: 6px;
+}
+
+/* Dark theme (default) */
+[data-theme='dark'] {
+  --color-bg: #0d0d0f;
+  --color-surface: #161618;
+  --color-border: #2a2a2e;
+  --color-text: #e8e8ea;
+  --color-muted: #6b6b78;
+  --color-accent: #00c896;
+  --color-accent-dim: #00c89620;
+}
+
+/* Light theme */
+[data-theme='light'] {
+  --color-bg: #fafafa;
+  --color-surface: #f0f0f2;
+  --color-border: #d8d8de;
+  --color-text: #111113;
+  --color-muted: #6b6b78;
+  --color-accent: #007d5e;
+  --color-accent-dim: #007d5e20;
+}
