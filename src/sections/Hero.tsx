@@ -1,11 +1,13 @@
-import { profile } from '@/data/profile'
-import styles from './Hero.module.css'
+import { profile } from '@/data/profile';
+import styles from './Hero.module.css';
 
 export function Hero() {
   return (
     <section id="hero" className={styles.hero}>
       <div className="container">
-        <h1 className={styles.name}>{profile.name}</h1>
+        <p className={styles.location}>
+          {profile.name} / {profile.location}
+        </p>
 
         <p className={styles.title}>
           {profile.title}
@@ -15,8 +17,6 @@ export function Hero() {
         </p>
 
         <p className={styles.tagline}>{profile.tagline}</p>
-
-        <p className={styles.location}>{profile.location}</p>
 
         <div className={styles.links}>
           <a href="/cv.pdf" download className={styles.btnPrimary}>
@@ -41,8 +41,16 @@ export function Hero() {
           <a href={`mailto:${profile.email}`} className={styles.btnGhost}>
             Email
           </a>
+          <a
+            href={profile.telegram}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.btnGhost}
+          >
+            Telegram
+          </a>
         </div>
       </div>
     </section>
-  )
+  );
 }

@@ -3,13 +3,13 @@ export const profile = {
   title: 'Senior Frontend Engineer — React / TypeScript',
   tagline:
     '8+ years building data-heavy dashboards, complex forms and internal tools for product teams in security, edtech and fintech.',
-  location: 'Remote · Open to Relocate',
+  location: 'Remote · UTC +3 · Open to Relocate',
   email: 'ruslan.korolev29@gmail.com',
   telegram: 'https://t.me/infinitybuddha',
-  github: 'https://github.com/ruslankorolev',
-  linkedin: 'https://linkedin.com/in/ruslan-korolev',
-  about: `Senior Frontend Engineer with 8+ years shipping product web apps end-to-end — from UX design sessions with PMs and designers through release, testing and support. I've worked on CRMs, dashboards and internal tools in cybersecurity, edtech and fintech, including products with tens of thousands of concurrent users. I own features fully: not just implementing specs but shaping solutions, designing APIs and setting quality standards. I write structured, readable, maintainable code and turn shifting requirements into working product decisions.`,
-} as const
+  github: 'https://github.com/infinitybuddha29',
+  linkedin: 'https://linkedin.com/in/ruslan-korolev-frontend',
+  about: `8+ years building data-heavy dashboards, complex forms and design systems for US and international product teams`,
+} as const;
 
 export const experience = [
   {
@@ -62,25 +62,25 @@ export const experience = [
       'Contributed to a shared UI library used across multiple products; set up and maintained Webpack build pipeline',
     ],
   },
-] as const
+] as const;
 
 export const projects = [
   {
-    name: 'Dashboard showcase',
+    name: 'Telegram sticker converter',
     description:
-      'Data-heavy dashboard with advanced filtering, Recharts visualizations and Zod-validated forms. E2E covered with Playwright.',
-    stack: ['React', 'TypeScript', 'Recharts', 'Zod', 'Playwright'],
+      'Convert animated WebP/GIF/MP4 to Telegram-ready VP9 WebM stickers (≤256KB, ≤3s, 512px)',
+    stack: ['React', 'TypeScript', 'Node.js', 'Claude AI'],
     demo: null as string | null,
-    code: 'https://github.com/ruslankorolev',
+    code: 'https://github.com/infinitybuddha29/telegram-sticker-converter',
   },
   {
     name: 'This site',
     description: 'Hand-coded. No AI, no design systems. Yes, really.',
     stack: ['React', 'TypeScript', 'CSS Modules', 'Vite'],
     demo: null as string | null,
-    code: 'https://github.com/ruslankorolev/korolev-cli-portfolio',
+    code: 'https://github.com/infinitybuddha29/korolev-cli-portfolioo',
   },
-] as const
+] as const;
 
 export const skills = [
   'React',
@@ -98,4 +98,4 @@ export const skills = [
   'Rsbuild',
   'Sentry',
   'Figma',
-] as const
+] as const;
