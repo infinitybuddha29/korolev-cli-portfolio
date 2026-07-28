@@ -6,7 +6,7 @@ export function About() {
   return (
     <section id="about" aria-labelledby="about-heading" className={styles.about}>
       <div className="container">
-        <SectionHeader title="about" index={1} total={4} />
+        <SectionHeader title="about" index={1} total={3} />
         <p className={styles.text}>{profile.about}</p>
         <div className={styles.skills}>
           {skills.map((skill) => (

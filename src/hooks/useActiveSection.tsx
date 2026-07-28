@@ -14,7 +14,7 @@ export const useActiveSection = () => {
       { threshold: 0.9 },
     );
 
-    ['hero', 'about', 'experience', 'projects'].forEach((id) => {
+    ['hero', 'about', 'projects', 'contact'].forEach((id) => {
       const el = document.getElementById(id);
       if (el) observer.observe(el);
     });

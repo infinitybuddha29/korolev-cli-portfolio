@@ -1,6 +1,6 @@
 export const profile = {
   name: 'Ruslan Korolev',
-  title: 'Senior Frontend Engineer — React / TypeScript',
+  title: 'Senior Frontend Engineer',
   tagline:
     '8+ years building data-heavy dashboards, complex forms and internal tools for product teams in security, edtech and fintech.',
   location: 'Remote · UTC +3 · Open to Relocate',

@@ -6,7 +6,7 @@ export const Projects = () => {
   return (
     <section id="projects" className={styles.projects}>
       <div className="container">
-        <SectionHeader title="projects" index={2} total={4} />
+        <SectionHeader title="projects" index={2} total={3} />
         <div className={styles.list}>
           {projects.map((item, index) => (
             <div key={item.name} className={styles.card}>
