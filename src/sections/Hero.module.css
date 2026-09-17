@@ -19,6 +19,36 @@
    every width, which is what brings the effect back. */
 .line {
   display: block;
+  /* hugs the glyphs so the scanline band overlay matches the text, not the
+     720px container it sits in */
+  width: fit-content;
+  position: relative;
+
+  /* Declared here, not on .glitch: the scanline overlay is .line::after, and
+     custom properties only inherit downward. Themed through variables because
+     @keyframes cannot be, and the effect leans on blending that behaves the
+     opposite way over a light background. */
+  --glitch-blend: screen;
+  --glitch-cyan: #00f0ff;
+  --glitch-magenta: #ff2a6d;
+  --glitch-scanline: rgba(0, 240, 255, 0.14);
+  --glitch-flash: rgba(252, 238, 10, 0.45);
+  --glitch-flash-soft: rgba(252, 238, 10, 0.3);
+}
+
+/*
+ * `screen` only ever adds light, so against the light theme's near-white
+ * background the copies washed out into a muddy yellow smear. `multiply` is
+ * the subtractive mirror — same tears, darkening instead of lightening — and
+ * the channels are deepened to survive on a bright background.
+ */
+:global([data-theme='light']) .line {
+  --glitch-blend: multiply;
+  --glitch-cyan: #0090b0;
+  --glitch-magenta: #c4004e;
+  --glitch-scanline: rgba(0, 80, 110, 0.16);
+  --glitch-flash: rgba(150, 110, 0, 0.5);
+  --glitch-flash-soft: rgba(150, 110, 0, 0.32);
 }
 
 .cursor {
@@ -29,11 +59,21 @@
 }
 
 /* ── CRT / Cyberpunk 2077 title glitch ───────────────────────── */
+
+/*
+ * Everything below runs on steps(1, end) rather than linear. A linear tween
+ * slides the ghost copies smoothly across the screen, which reads as text
+ * drifting, not as a signal fault — hardware corruption jumps between whole
+ * corrupted frames and holds each one. steps() gives exactly that: the value
+ * sits still, then cuts. Offsets stay at 2–6px for the same reason; past
+ * ~8px the glyphs stop reading as one word coming apart and just look loose.
+ */
+
 .glitch {
+  /* inline-block so transforms apply (they are ignored on inline boxes) and
+     `width: 100%` on the copies resolves against the whole span */
+  display: inline-block;
   position: relative;
-  /* inline (not inline-block) so the blinking cursor flows right after the
-     last word instead of being pushed to its own line when the title wraps */
-  display: inline;
 }
 
 .glitch::before,
@@ -46,156 +86,229 @@
   height: 100%;
   opacity: 0;
   pointer-events: none;
-  /* screen blend keeps the base glyphs readable through the ghosts */
-  mix-blend-mode: screen;
+  /* blending keeps the base glyphs readable through the ghosts */
+  mix-blend-mode: var(--glitch-blend);
 }
 
 /*
- * forwards = hold the final keyframe (opacity:0 / aligned) after the 0.55s
- * animation ends, until data-on is removed at 600ms. Without it the copies
- * snap back to the static opacity:0.6 aligned state for that ~50ms gap and
- * flash a bright frame over the white title.
+ * forwards = hold the final keyframe (opacity:0 / aligned) after the 0.45s
+ * animation ends, until data-on is removed at 500ms. Without it the copies
+ * snap back to the static aligned state for that gap and flash a bright
+ * frame over the white title.
  */
 
-/* cyan channel — drifts LEFT, then snaps home */
-.glitch[data-on='1']::before {
-  opacity: 0.6;
-  color: #00f0ff;
-  animation: glitch-cyan 0.55s linear 1 forwards;
+/* cyan channel — torn bands, cutting left */
+.line[data-on='1'] .glitch::before {
+  color: var(--glitch-cyan);
+  animation: glitch-cyan 0.45s steps(1, end) 1 forwards;
 }
 
-/* red channel — drifts RIGHT, then snaps home */
-.glitch[data-on='1']::after {
-  opacity: 0.6;
-  color: #ff003c;
-  animation: glitch-red 0.55s linear 1 forwards;
+/* magenta channel — torn bands, cutting right */
+.line[data-on='1'] .glitch::after {
+  color: var(--glitch-magenta);
+  animation: glitch-magenta 0.45s steps(1, end) 1 forwards;
 }
 
-/* base glyphs jitter + signature CP2077 yellow flash */
-.glitch[data-on='1'] {
-  animation: glitch-base 0.55s linear 1 forwards;
+/* base glyphs: tight jitter + signature CP2077 yellow flash */
+.line[data-on='1'] .glitch {
+  animation: glitch-base 0.45s steps(1, end) 1 forwards;
 }
 
 /*
- * Arc: 0% aligned → copies drift apart along X → held scattered with jitter
- * → 88%→100% snap back to translate(0) + fade = soft "bam" reassembly.
+ * Scanline band sweeping down the line — the piece that reads as a CRT
+ * rather than as a generic RGB split. Sits on .line (not .glitch, whose two
+ * pseudo-elements are already spent on the colour channels).
+ */
+.line[data-on='1']::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: var(--glitch-blend);
+  background: repeating-linear-gradient(
+    0deg,
+    var(--glitch-scanline) 0px,
+    var(--glitch-scanline) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  animation: glitch-scan 0.45s steps(1, end) 1 forwards;
+}
+
+/*
+ * Each channel holds one torn horizontal band at a time and cuts to the next
+ * — no in-between positions. The bands are deliberately uneven in height and
+ * never mirror each other, so the two channels read as independent faults in
+ * the same signal rather than as one symmetric decoration.
  */
 @keyframes glitch-cyan {
   0% {
-    clip-path: inset(0 0 0 0);
+    opacity: 0;
+    clip-path: inset(0 0 100% 0);
     transform: translate(0, 0);
-    text-shadow: none;
   }
-  14% {
-    clip-path: inset(18% 0 60% 0);
-    transform: translate(-10px, -1px);
-    text-shadow: -7px 0 rgba(0, 240, 255, 0.3);
+  6% {
+    opacity: 0.85;
+    clip-path: inset(12% 0 71% 0);
+    transform: translate(-5px, -1px);
   }
-  36% {
-    clip-path: inset(58% 0 12% 0);
-    transform: translate(-15px, 1px);
-    text-shadow: -10px 0 rgba(0, 240, 255, 0.22);
+  18% {
+    opacity: 0.85;
+    clip-path: inset(48% 0 38% 0);
+    transform: translate(3px, 0);
   }
-  58% {
-    clip-path: inset(38% 0 40% 0);
-    transform: translate(-8px, 0);
-    text-shadow: -6px 0 rgba(0, 240, 255, 0.22);
+  30% {
+    opacity: 0.85;
+    clip-path: inset(66% 0 9% 0);
+    transform: translate(-6px, 1px);
   }
-  78% {
-    clip-path: inset(8% 0 74% 0);
-    transform: translate(-12px, 1px);
-    text-shadow: -8px 0 rgba(0, 240, 255, 0.18);
+  42% {
+    opacity: 0.7;
+    clip-path: inset(22% 0 55% 0);
+    transform: translate(2px, 0);
   }
-  88% {
+  56% {
+    opacity: 0.85;
+    clip-path: inset(78% 0 4% 0);
+    transform: translate(-4px, 0);
+  }
+  70% {
+    opacity: 0.6;
+    clip-path: inset(36% 0 46% 0);
+    transform: translate(4px, -1px);
+  }
+  84% {
+    opacity: 0.4;
     clip-path: inset(0 0 0 0);
-    transform: translate(-5px, 0);
-    text-shadow: none;
+    transform: translate(-2px, 0);
   }
   100% {
+    opacity: 0;
     clip-path: inset(0 0 0 0);
     transform: translate(0, 0);
-    opacity: 0;
   }
 }
 
-@keyframes glitch-red {
+@keyframes glitch-magenta {
   0% {
-    clip-path: inset(0 0 0 0);
+    opacity: 0;
+    clip-path: inset(100% 0 0 0);
     transform: translate(0, 0);
-    text-shadow: none;
   }
-  14% {
-    clip-path: inset(60% 0 14% 0);
-    transform: translate(10px, 1px);
-    text-shadow: 7px 0 rgba(255, 0, 60, 0.3);
+  6% {
+    opacity: 0.85;
+    clip-path: inset(58% 0 27% 0);
+    transform: translate(5px, 1px);
   }
-  36% {
-    clip-path: inset(14% 0 62% 0);
-    transform: translate(15px, -1px);
-    text-shadow: 10px 0 rgba(255, 0, 60, 0.22);
+  18% {
+    opacity: 0.85;
+    clip-path: inset(8% 0 80% 0);
+    transform: translate(-4px, 0);
   }
-  58% {
-    clip-path: inset(50% 0 30% 0);
-    transform: translate(8px, 0);
-    text-shadow: 6px 0 rgba(255, 0, 60, 0.22);
+  30% {
+    opacity: 0.7;
+    clip-path: inset(41% 0 43% 0);
+    transform: translate(6px, -1px);
   }
-  78% {
-    clip-path: inset(74% 0 8% 0);
-    transform: translate(12px, -1px);
-    text-shadow: 8px 0 rgba(255, 0, 60, 0.18);
+  42% {
+    opacity: 0.85;
+    clip-path: inset(73% 0 11% 0);
+    transform: translate(-3px, 0);
   }
-  88% {
+  56% {
+    opacity: 0.6;
+    clip-path: inset(27% 0 60% 0);
+    transform: translate(4px, 1px);
+  }
+  70% {
+    opacity: 0.85;
+    clip-path: inset(85% 0 2% 0);
+    transform: translate(-5px, 0);
+  }
+  84% {
+    opacity: 0.4;
     clip-path: inset(0 0 0 0);
-    transform: translate(5px, 0);
-    text-shadow: none;
+    transform: translate(2px, 0);
   }
   100% {
+    opacity: 0;
     clip-path: inset(0 0 0 0);
     transform: translate(0, 0);
-    opacity: 0;
   }
 }
 
 /*
- * Base word shake. Uses left/top (not transform) because .glitch is
- * display:inline for cursor flow, and transforms don't apply to inline
- * boxes — relative offsets do. Rapid alternating jitter = visible shake.
+ * Base glyphs: sub-pixel-ish jitter only. The copies carry the drama; if the
+ * base moves far too, the whole title looks unanchored. Two yellow frames —
+ * the CP2077 signature — land on the widest channel splits.
  */
 @keyframes glitch-base {
-  0%, 100% {
-    left: 0;
-    top: 0;
+  0% {
+    transform: translate(0, 0);
     text-shadow: none;
   }
-  10% {
-    left: -3px;
-    top: 1px;
+  6% {
+    transform: translate(-2px, 0);
+    text-shadow: 0 0 10px var(--glitch-flash);
   }
-  20% {
-    left: 3px;
-    top: -2px;
-    text-shadow: 0 0 8px rgba(252, 238, 10, 0.4); /* CP2077 yellow flash */
+  18% {
+    transform: translate(1px, 1px);
+    text-shadow: none;
   }
-  32% {
-    left: -2px;
-    top: 2px;
+  30% {
+    transform: translate(-1px, 0);
+    text-shadow: 0 0 8px var(--glitch-flash-soft);
   }
-  44% {
-    left: 4px;
-    top: -1px;
-    text-shadow: 0 0 7px rgba(252, 238, 10, 0.28);
+  42% {
+    transform: translate(2px, -1px);
+    text-shadow: none;
   }
   56% {
-    left: -3px;
-    top: 0;
+    transform: translate(-1px, 1px);
   }
-  68% {
-    left: 3px;
-    top: 2px;
+  70% {
+    transform: translate(1px, 0);
   }
-  80% {
-    left: -2px;
-    top: -1px;
+  84%,
+  100% {
+    transform: translate(0, 0);
+    text-shadow: none;
+  }
+}
+
+/*
+ * A band of scanlines wiping top to bottom. Each step exposes a different
+ * slice, so it cuts down the line instead of gliding — same reasoning as the
+ * channels above.
+ */
+@keyframes glitch-scan {
+  0% {
+    opacity: 0;
+    clip-path: inset(0 0 100% 0);
+  }
+  10% {
+    opacity: 1;
+    clip-path: inset(0 0 76% 0);
+  }
+  30% {
+    opacity: 1;
+    clip-path: inset(24% 0 52% 0);
+  }
+  50% {
+    opacity: 1;
+    clip-path: inset(48% 0 28% 0);
+  }
+  70% {
+    opacity: 1;
+    clip-path: inset(72% 0 6% 0);
+  }
+  88% {
+    opacity: 0.5;
+    clip-path: inset(92% 0 0 0);
+  }
+  100% {
+    opacity: 0;
+    clip-path: inset(100% 0 0 0);
   }
 }
 

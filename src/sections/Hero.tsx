@@ -11,11 +11,11 @@ export function Hero() {
   const heroRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const els = [nameRef.current, roleRef.current].filter(
+    const lines = [nameRef.current, roleRef.current].filter(
       (el): el is HTMLSpanElement => el !== null,
     );
     const hero = heroRef.current;
-    if (els.length === 0 || !hero) return;
+    if (lines.length === 0 || !hero) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     let onTimer = 0;
@@ -23,36 +23,37 @@ export function Hero() {
     let running = false;
 
     /*
-     * The ghost copies are position:absolute inside a display:inline .glitch,
-     * so `width: 100%` only resolves correctly while the span occupies a
-     * single line fragment. The title is split into two short lines that fit
-     * at every width we support, but a stray wrap would spill the copies over
-     * the paragraphs below — so each line is still checked before it fires.
+     * The ghost copies are position:absolute inside the .glitch span, so
+     * `width: 100%` only resolves correctly while that span occupies a single
+     * line fragment. The title is split into two short lines that fit at every
+     * width we support, but a stray wrap would spill the copies over the
+     * paragraphs below — so each line is still checked before it fires.
      */
-    const fitsOneLine = (el: HTMLSpanElement) => el.getClientRects().length === 1;
+    const fitsOneLine = (line: HTMLSpanElement) =>
+      line.querySelector('[data-text]')?.getClientRects().length === 1;
 
     const schedule = () => {
       const delay = 8000 + Math.random() * 7000; // rare: 8–15s between bursts
       onTimer = window.setTimeout(() => {
         // re-checked per burst, so resizing across the wrap point is handled
-        const ready = els.filter(fitsOneLine);
+        const ready = lines.filter(fitsOneLine);
         if (ready.length === 0) {
           schedule();
           return;
         }
-        // both lines burst on the same frame — one CRT dropout, not two
-        ready.forEach((el) => el.setAttribute('data-on', '1'));
+        // both lines burst on the same frame — one signal fault, not two
+        ready.forEach((line) => line.setAttribute('data-on', '1'));
         offTimer = window.setTimeout(() => {
-          ready.forEach((el) => el.removeAttribute('data-on'));
+          ready.forEach((line) => line.removeAttribute('data-on'));
           schedule();
-        }, 600); // must outlast the 0.55s animation so the snap-back frame plays
+        }, 500); // must outlast the 0.45s animation so the final frame holds
       }, delay);
     };
 
     const stop = () => {
       window.clearTimeout(onTimer);
       window.clearTimeout(offTimer);
-      els.forEach((el) => el.removeAttribute('data-on'));
+      lines.forEach((line) => line.removeAttribute('data-on'));
     };
 
     // only glitch while the hero is actually on screen
@@ -84,13 +85,13 @@ export function Hero() {
             cannot target. An explicit label overrides name-from-content, so the
             title is announced once instead of three times. */}
         <h1 className={styles.title} aria-label={`${HERO_NAME} — ${HERO_ROLE}`}>
-          <span className={styles.line}>
-            <span ref={nameRef} className={styles.glitch} data-text={HERO_NAME}>
+          <span ref={nameRef} className={styles.line}>
+            <span className={styles.glitch} data-text={HERO_NAME}>
               {HERO_NAME}
             </span>
           </span>
-          <span className={styles.line}>
-            <span ref={roleRef} className={styles.glitch} data-text={HERO_ROLE}>
+          <span ref={roleRef} className={styles.line}>
+            <span className={styles.glitch} data-text={HERO_ROLE}>
               {HERO_ROLE}
             </span>
             <span className={styles.cursor} aria-hidden="true">
