@@ -15,8 +15,13 @@ export const Experience = () => {
             ← back
           </a>
 
-          <h1 className={styles.title}>
-            {profile.name} — {profile.title}
+          {/* Two explicit lines, same as the hero. As one flat string it wrapped
+              wherever it ran out of room — currently mid-role, "— Senior /
+              Frontend Engineer". aria-label keeps the announced name matching
+              the <title> tag. */}
+          <h1 className={styles.title} aria-label={`${profile.name} — ${profile.title}`}>
+            <span className={styles.titleLine}>{profile.name}</span>
+            <span className={styles.titleLine}>{profile.title}</span>
           </h1>
           <p className={styles.lead}>
             8+ years building data-heavy dashboards, complex forms and design systems for product
