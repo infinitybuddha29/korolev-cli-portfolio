@@ -124,13 +124,12 @@ export function Hero() {
           </span>
         </h1>
 
+        {/* One paragraph, not two. The company list was doing no work here —
+            the names aren't famous enough to carry weight on their own, and
+            "where i've worked" lists them a screen below anyway. */}
         <p className={styles.pitch}>
           I build web products end-to-end — from landing pages to full apps with auth, payments
-          and AI.
-        </p>
-        <p className={styles.pitch}>
-          8+ years in product teams — Wallarm, Samsung, Uchi.ru. Now taking on freelance work —
-          one-off builds or ongoing.
+          and AI. 8+ years in product teams.
         </p>
 
         <div className={styles.links}>
