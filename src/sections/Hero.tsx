@@ -21,6 +21,7 @@ export function Hero() {
     let onTimer = 0;
     let offTimer = 0;
     let running = false;
+    let introPending = true;
 
     /*
      * The ghost copies are position:absolute inside the .glitch span, so
@@ -32,22 +33,28 @@ export function Hero() {
     const fitsOneLine = (line: HTMLSpanElement) =>
       line.querySelector('[data-text]')?.getClientRects().length === 1;
 
-    const schedule = () => {
-      const delay = 8000 + Math.random() * 7000; // rare: 8–15s between bursts
-      onTimer = window.setTimeout(() => {
-        // re-checked per burst, so resizing across the wrap point is handled
-        const ready = lines.filter(fitsOneLine);
-        if (ready.length === 0) {
-          schedule();
-          return;
-        }
-        // both lines burst on the same frame — one signal fault, not two
-        ready.forEach((line) => line.setAttribute('data-on', '1'));
-        offTimer = window.setTimeout(() => {
-          ready.forEach((line) => line.removeAttribute('data-on'));
-          schedule();
-        }, 500); // must outlast the 0.45s animation so the final frame holds
-      }, delay);
+    const burst = () => {
+      // re-checked per burst, so resizing across the wrap point is handled
+      const ready = lines.filter(fitsOneLine);
+      if (ready.length === 0) {
+        schedule();
+        return;
+      }
+      // both lines burst on the same frame — one signal fault, not two
+      ready.forEach((line) => line.setAttribute('data-on', '1'));
+      offTimer = window.setTimeout(() => {
+        ready.forEach((line) => line.removeAttribute('data-on'));
+        schedule();
+      }, 500); // must outlast the 0.45s animation so the final frame holds
+    };
+
+    /*
+     * 4–8s apart, and the first one lands ~1.2s after the hero appears. At the
+     * old 8–15s a visitor who stayed ten seconds could easily never see the
+     * effect at all — the burst itself is only 0.45s long.
+     */
+    const schedule = (delay = 4000 + Math.random() * 4000) => {
+      onTimer = window.setTimeout(burst, delay);
     };
 
     const stop = () => {
@@ -61,7 +68,10 @@ export function Hero() {
       ([entry]) => {
         if (entry.isIntersecting && !running) {
           running = true;
-          schedule();
+          // long enough for the fonts to settle, short enough to still read as
+          // part of the page arriving rather than a random later twitch
+          schedule(introPending ? 1200 : undefined);
+          introPending = false;
         } else if (!entry.isIntersecting && running) {
           running = false;
           stop();
