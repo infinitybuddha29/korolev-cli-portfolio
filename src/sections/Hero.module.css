@@ -1,5 +1,7 @@
 .hero {
-  padding-block: var(--space-48);
+  /* 192px of dead space above the title ate the whole first screen on a phone.
+     Scales down to 72px at 390px wide; desktop is unchanged above ~1370px. */
+  padding-block: clamp(4.5rem, 14vw, 12rem);
 }
 
 .title {
@@ -9,6 +11,14 @@
   line-height: 1.15;
   color: var(--color-text);
   margin-bottom: var(--space-6);
+}
+
+/* Each half of the title gets its own line. The full string needed ~795px at
+   40px mono against a 720px container, so it always wrapped — and a wrapped
+   line permanently disabled the glitch (see Hero.tsx). Two short lines fit at
+   every width, which is what brings the effect back. */
+.line {
+  display: block;
 }
 
 .cursor {

@@ -14,7 +14,11 @@ export const SectionHeader: FC<Props> = ({ title, index, total }) => {
   return (
     <div className={styles.header}>
       <h2 className={styles.title}>
-        <span className={styles.hash}>##</span> {title}
+        {/* decorative markdown flourish — announced as "hash hash" otherwise */}
+        <span className={styles.hash} aria-hidden="true">
+          ##
+        </span>{' '}
+        {title}
       </h2>
       <span className={styles.counter}>
         {idx} / {tot}

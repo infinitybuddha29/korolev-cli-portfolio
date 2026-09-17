@@ -2,14 +2,20 @@ import { useEffect, useRef } from 'react';
 import { profile } from '@/data/profile';
 import styles from './Hero.module.css';
 
+const HERO_NAME = 'Ruslan Korolev';
+const HERO_ROLE = 'Frontend Engineer';
+
 export function Hero() {
-  const glitchRef = useRef<HTMLSpanElement>(null);
+  const nameRef = useRef<HTMLSpanElement>(null);
+  const roleRef = useRef<HTMLSpanElement>(null);
   const heroRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const el = glitchRef.current;
+    const els = [nameRef.current, roleRef.current].filter(
+      (el): el is HTMLSpanElement => el !== null,
+    );
     const hero = heroRef.current;
-    if (!el || !hero) return;
+    if (els.length === 0 || !hero) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     let onTimer = 0;
@@ -17,25 +23,27 @@ export function Hero() {
     let running = false;
 
     /*
-     * The ghost copies are position:absolute inside a display:inline .glitch.
-     * Once the title wraps, `width: 100%` resolves against the last line
-     * fragment only, so the copies render as a narrow column of text spilling
-     * over the paragraphs below. Single-line titles are the only case the
-     * effect is built for — skip it entirely otherwise.
+     * The ghost copies are position:absolute inside a display:inline .glitch,
+     * so `width: 100%` only resolves correctly while the span occupies a
+     * single line fragment. The title is split into two short lines that fit
+     * at every width we support, but a stray wrap would spill the copies over
+     * the paragraphs below — so each line is still checked before it fires.
      */
-    const fitsOneLine = () => el.getClientRects().length === 1;
+    const fitsOneLine = (el: HTMLSpanElement) => el.getClientRects().length === 1;
 
     const schedule = () => {
       const delay = 8000 + Math.random() * 7000; // rare: 8–15s between bursts
       onTimer = window.setTimeout(() => {
         // re-checked per burst, so resizing across the wrap point is handled
-        if (!fitsOneLine()) {
+        const ready = els.filter(fitsOneLine);
+        if (ready.length === 0) {
           schedule();
           return;
         }
-        el.setAttribute('data-on', '1');
+        // both lines burst on the same frame — one CRT dropout, not two
+        ready.forEach((el) => el.setAttribute('data-on', '1'));
         offTimer = window.setTimeout(() => {
-          el.removeAttribute('data-on');
+          ready.forEach((el) => el.removeAttribute('data-on'));
           schedule();
         }, 600); // must outlast the 0.55s animation so the snap-back frame plays
       }, delay);
@@ -44,7 +52,7 @@ export function Hero() {
     const stop = () => {
       window.clearTimeout(onTimer);
       window.clearTimeout(offTimer);
-      el.removeAttribute('data-on');
+      els.forEach((el) => el.removeAttribute('data-on'));
     };
 
     // only glitch while the hero is actually on screen
@@ -68,17 +76,26 @@ export function Hero() {
     };
   }, []);
 
-  const heroTitle = 'Ruslan Korolev — Frontend Engineer';
-
   return (
     <section id="hero" ref={heroRef} className={styles.hero}>
       <div className="container">
-        <h1 className={styles.title}>
-          <span ref={glitchRef} className={styles.glitch} data-text={heroTitle}>
-            {heroTitle}
+        {/* aria-label, not aria-hidden: the ghost copies are ::before/::after
+            pseudo-elements carrying `content: attr(data-text)`, which aria-hidden
+            cannot target. An explicit label overrides name-from-content, so the
+            title is announced once instead of three times. */}
+        <h1 className={styles.title} aria-label={`${HERO_NAME} — ${HERO_ROLE}`}>
+          <span className={styles.line}>
+            <span ref={nameRef} className={styles.glitch} data-text={HERO_NAME}>
+              {HERO_NAME}
+            </span>
           </span>
-          <span className={styles.cursor} aria-hidden="true">
-            ▍
+          <span className={styles.line}>
+            <span ref={roleRef} className={styles.glitch} data-text={HERO_ROLE}>
+              {HERO_ROLE}
+            </span>
+            <span className={styles.cursor} aria-hidden="true">
+              ▍
+            </span>
           </span>
         </h1>
 
