@@ -115,7 +115,7 @@ export function Hero() {
           and AI.
         </p>
         <p className={styles.pitch}>
-          8 years in product teams — Wallarm, Samsung, Uchi.ru. Now taking on freelance work —
+          8+ years in product teams — Wallarm, Samsung, Uchi.ru. Now taking on freelance work —
           one-off builds or ongoing.
         </p>
 

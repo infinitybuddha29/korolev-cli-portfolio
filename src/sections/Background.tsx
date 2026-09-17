@@ -10,7 +10,7 @@ export const Background = () => (
     <div className="container">
       <SectionHeader title="where i've worked" index={3} total={3} />
       <p className={styles.lead}>
-        8 years · 4 product teams · products used by hundreds of thousands of people.
+        8+ years · 4 product teams · security, foodtech, edtech and fintech.
       </p>
       <p className={styles.desc}>
         I don't just implement tickets — I work with product and design on what gets built, and I

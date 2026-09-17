@@ -19,7 +19,7 @@ const services = [
   },
   {
     title: 'Frontend on your team',
-    desc: "Dropping into an existing codebase: React and TypeScript, framework migrations, design systems, tests. This is what I've done for 8 years.",
+    desc: "Dropping into an existing codebase: React and TypeScript, framework migrations, design systems, tests. This is what I've done for 8+ years.",
     meta: 'hourly / monthly',
   },
 ];
