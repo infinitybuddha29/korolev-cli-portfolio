@@ -35,7 +35,9 @@
   --color-surface: #161618;
   --color-border: #2a2a2e;
   --color-text: #e8e8ea;
-  --color-muted: #6b6b78;
+  /* 5.3:1 on --color-bg, 5.0:1 on --color-surface — WCAG AA for body text.
+     #6b6b78 read better but landed at 3.4:1 on cards. */
+  --color-muted: #85858f;
   --color-accent: #00c896;
   --color-accent-dim: #00c89620;
 }
@@ -46,7 +48,8 @@
   --color-surface: #f0f0f2;
   --color-border: #d8d8de;
   --color-text: #111113;
-  --color-muted: #6b6b78;
+  /* 5.5:1 / 5.1:1 — the old #6b6b78 passed here, but only by 0.1 on cards. */
+  --color-muted: #65656f;
   --color-accent: #007d5e;
   --color-accent-dim: #007d5e20;
 }

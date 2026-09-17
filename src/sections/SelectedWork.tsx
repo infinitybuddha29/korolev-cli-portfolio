@@ -8,8 +8,8 @@ export const SelectedWork = () => {
       <div className="container">
         <SectionHeader title="selected work" index={1} total={3} />
         <p className={styles.intro}>
-          Most of my production work lives behind NDAs at Wallarm, Samsung and Uchi.ru. These are
-          the ones I can show.
+          Most of my production work lives behind NDAs at Wallarm, Samsung and Uchi.ru. These are my
+          own projects — built and run solo.
         </p>
         {/* Text-only cards: screenshots aren't ready, and an empty 16:10 box reads
             as a broken image. The `preview` paths stay in profile.ts — when real
