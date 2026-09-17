@@ -2,13 +2,55 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 34px;
+  height: 44px;
   background-color: var(--color-surface);
-  font-size: 12px;
+  border-top: 1px solid var(--color-border);
+  font-family: var(--font-mono);
+  font-size: 13px;
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 0 var(--space-4);
+  padding: 0 var(--space-6);
   color: var(--color-muted);
+  z-index: 20;
+}
+
+.file {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.file:hover {
+  text-decoration: underline;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.theme {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: var(--color-muted);
+  cursor: pointer;
+  font-size: 15px;
+  line-height: 1;
+  padding: 4px;
+}
+
+.theme:hover {
+  color: var(--color-accent);
+}
+
+/* mobile: collapse to just the section filename + theme toggle */
+@media (max-width: 640px) {
+  .meta {
+    display: none;
+  }
 }
