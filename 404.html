@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>404 — command not found</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <style>
+      :root {
+        color-scheme: dark light;
+      }
+      html,
+      body {
+        margin: 0;
+        min-height: 100vh;
+      }
+      body {
+        background: #0d0d0f;
+        color: #e8e8ea;
+        font-family: 'JetBrains Mono', ui-monospace, 'Fira Code', monospace;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+      }
+      .wrap {
+        line-height: 2.2;
+        font-size: 15px;
+      }
+      .err {
+        color: #6b6b78;
+      }
+      .err b {
+        color: #e8e8ea;
+        font-weight: 400;
+      }
+      a {
+        color: #00c896;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="err">command not found: <b id="path">/</b></div>
+      <div><a href="/">cd ~</a></div>
+    </div>
+    <script>
+      document.getElementById('path').textContent = location.pathname;
+    </script>
+  </body>
+</html>

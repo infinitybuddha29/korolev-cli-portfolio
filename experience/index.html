@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Ruslan Korolev — 8+ years as a Senior Frontend Engineer across security, foodtech, edtech and fintech. Full experience, stack and CV."
+    />
+    <meta name="theme-color" content="#0d0d0f" />
+    <meta property="og:type" content="profile" />
+    <meta property="og:title" content="Ruslan Korolev — Experience" />
+    <meta
+      property="og:description"
+      content="8+ years building data-heavy dashboards, complex forms and design systems for product teams."
+    />
+    <!-- absolute: several scrapers (LinkedIn among them) skip relative og:image -->
+    <meta property="og:image" content="https://korolevdev.com/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:url" content="https://korolevdev.com/experience/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>Ruslan Korolev — Experience</title>
+    <link rel="canonical" href="https://korolevdev.com/experience/" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script>
+      (function () {
+        // any unknown value would match neither token block and leave the page
+        // with no colours at all, so fall back rather than trust storage
+        var t;
+        try {
+          t = localStorage.getItem('theme');
+        } catch (e) {}
+        if (t !== 'dark' && t !== 'light') {
+          t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        }
+        document.documentElement.dataset.theme = t;
+      })();
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Ruslan Korolev",
+        "jobTitle": "Senior Frontend Engineer",
+        "email": "ruslan.korolev29@gmail.com",
+        "sameAs": [
+          "https://github.com/infinitybuddha29",
+          "https://linkedin.com/in/ruslan-korolev-frontend"
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/experience.tsx"></script>
+  </body>
+</html>
