@@ -10,26 +10,13 @@
   list-style: none;
 }
 
-.head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--space-4);
-  margin-bottom: var(--space-2);
-}
-
+/* .head and .meta are gone with the delivery windows they laid out — the
+   title now sits directly above the description. */
 .title {
   font-size: var(--text-lg);
   font-weight: 700;
   color: var(--color-text);
-}
-
-.meta {
-  font-family: var(--font-mono);
-  font-size: var(--text-sm);
-  color: var(--color-accent);
-  white-space: nowrap;
-  flex-shrink: 0;
+  margin-bottom: var(--space-2);
 }
 
 .desc {

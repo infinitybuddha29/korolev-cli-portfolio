@@ -68,7 +68,7 @@ export const Experience = () => {
             <div className={styles.actions}>
               <a
                 className={styles.btnPrimary}
-                href={profile.telegramProject}
+                href={profile.telegram}
                 target="_blank"
                 rel="noopener noreferrer"
               >

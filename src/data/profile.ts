@@ -5,9 +5,10 @@ export const profile = {
     '8+ years building data-heavy dashboards, complex forms and internal tools for product teams in security, edtech and fintech.',
   location: 'Remote · UTC +3 · Open to Relocate',
   email: 'ruslan.korolev29@gmail.com',
+  // Plain link, no pre-filled text. It used to open Telegram with "Hi Ruslan,
+  // I have a project:" already typed, which answers for the visitor and gets
+  // it wrong for anyone who isn't a client.
   telegram: 'https://t.me/infinitybuddha',
-  // Telegram deep-link pre-filled with a project intro — primary freelance CTA
-  telegramProject: 'https://t.me/infinitybuddha?text=Hi%20Ruslan%2C%20I%20have%20a%20project%3A%20',
   github: 'https://github.com/infinitybuddha29',
   linkedin: 'https://linkedin.com/in/ruslan-korolev-frontend',
   about: `8+ years building data-heavy dashboards, complex forms and design systems for US and international product teams`,

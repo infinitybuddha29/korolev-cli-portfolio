@@ -4,15 +4,15 @@ import styles from './Contact.module.css';
 export const Contact = () => (
   <section id="contact" className={styles.contact}>
     <div className="container">
-      <h2 className={styles.title}>Have a project?</h2>
+      <h2 className={styles.title}>Get in touch</h2>
       <p className={styles.lead}>
-        Describe it in a couple of sentences — I'll come back within a day with a rough scope, a
-        timeline and a price.
+        Roles, projects or a question about something above — write in a couple of sentences and
+        I&apos;ll come back within a day.
       </p>
       <div className={styles.actions}>
         <a
           className={styles.btnPrimary}
-          href={profile.telegramProject}
+          href={profile.telegram}
           target="_blank"
           rel="noopener noreferrer"
         >

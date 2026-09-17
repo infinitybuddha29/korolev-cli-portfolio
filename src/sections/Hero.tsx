@@ -134,12 +134,12 @@ export function Hero() {
 
         <div className={styles.links}>
           <a
-            href={profile.telegramProject}
+            href={profile.telegram}
             target="_blank"
             rel="noopener noreferrer"
             className={styles.btnPrimary}
           >
-            Start a project →
+            Get in touch →
           </a>
           <a href="/experience/" className={styles.btnGhost}>
             See my experience
