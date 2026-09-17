@@ -1,22 +1,29 @@
-import { About } from './sections/About';
-import { Contact } from './sections/Contact';
 import { Hero } from './sections/Hero';
+import { SelectedWork } from './sections/SelectedWork';
+import { WhatIDo } from './sections/WhatIDo';
+import { Background } from './sections/Background';
+import { Contact } from './sections/Contact';
 import { Footer } from './sections/Footer';
-import { Projects } from './sections/Projects';
-import { useActiveSection } from './hooks/useActiveSection';
 import { KanjiSparks } from './sections/KanjiSparks';
+import { useActiveSection } from './hooks/useActiveSection';
 
 function App() {
   const section = useActiveSection();
   return (
-    <div className="main">
-      <Hero />
-      <About />
-      <Projects />
-      <Contact />
+    <>
+      {/* background canvas layer — sibling BEFORE .main so .main (z-index:1)
+          sits above it; keeping it inside .main let the positioned canvas
+          paint over in-flow content */}
       <KanjiSparks />
+      <main className="main">
+        <Hero />
+        <SelectedWork />
+        <WhatIDo />
+        <Background />
+        <Contact />
+      </main>
       <Footer activeSection={section} />
-    </div>
+    </>
   );
 }
 

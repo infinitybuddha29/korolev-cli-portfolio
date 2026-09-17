@@ -3,38 +3,68 @@
   border-top: 1px solid var(--color-border);
 }
 
-.list {
+.title {
+  font-family: var(--font-mono);
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  font-weight: 500;
+  color: var(--color-text);
+  margin-bottom: var(--space-4);
+}
+
+.lead {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--color-muted);
+  max-width: 560px;
+  margin-bottom: var(--space-8);
+}
+
+.actions {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-6);
-  margin-bottom: var(--space-16);
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-bottom: var(--space-8);
 }
 
-.row {
-  display: grid;
-  grid-template-columns: 140px 1fr;
-  align-items: baseline;
+.btnPrimary {
+  padding: var(--space-3) var(--space-6);
+  background: var(--color-accent);
+  color: var(--color-bg);
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 0.95rem;
 }
 
-.label {
+.btnGhost {
+  padding: var(--space-3) var(--space-6);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  font-size: 0.95rem;
+  color: var(--color-text);
+  transition:
+    border-color 0.2s,
+    color 0.2s;
+}
+
+.btnGhost:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.socials {
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   color: var(--color-muted);
+  /* was space-8 — picks up the gap the removed availability line used to hold */
+  margin-bottom: var(--space-12);
 }
 
-.value {
-  margin: 0;
-}
-
-.link {
-  font-family: var(--font-mono);
-  font-size: var(--text-sm);
-  font-weight: 700;
-  color: var(--color-text);
+.socials a {
+  color: var(--color-muted);
   text-decoration: none;
 }
 
-.link:hover {
+.socials a:hover {
   color: var(--color-accent);
 }
 

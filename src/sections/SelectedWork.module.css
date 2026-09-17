@@ -1,0 +1,113 @@
+.work {
+  padding-block: var(--space-24);
+  border-top: 1px solid var(--color-border);
+}
+
+.intro {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: var(--color-muted);
+  max-width: 620px;
+  margin-bottom: var(--space-8);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.card {
+  position: relative;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--space-6);
+  transition: border-color 0.2s;
+}
+
+/* IDE-style marker down the left edge — dim at rest, accent on hover.
+   Carries the visual interest the missing screenshots used to. */
+.card::before {
+  content: '';
+  position: absolute;
+  inset-block: -1px;
+  left: -1px;
+  width: 2px;
+  border-radius: var(--radius) 0 0 var(--radius);
+  background: var(--color-accent);
+  opacity: 0.25;
+  transition: opacity 0.2s;
+}
+
+.card:hover,
+.card:focus-within {
+  border-color: var(--color-accent);
+}
+
+.card:hover::before,
+.card:focus-within::before {
+  opacity: 1;
+}
+
+.title {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: var(--space-2);
+}
+
+.tagline {
+  color: var(--color-muted);
+  font-weight: 400;
+}
+
+.desc {
+  font-size: var(--text-base);
+  line-height: 1.6;
+  color: var(--color-muted);
+  max-width: 600px;
+  margin-bottom: var(--space-4);
+}
+
+/* stack and links share one row to keep the card short */
+.foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3) var(--space-6);
+}
+
+.stack {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+}
+
+.links {
+  display: flex;
+  gap: var(--space-6);
+}
+
+.live,
+.code {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  text-decoration: none;
+}
+
+.live {
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
+.code {
+  color: var(--color-muted);
+}
+
+.live:hover,
+.code:hover {
+  text-decoration: underline;
+}

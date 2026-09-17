@@ -6,6 +6,8 @@ export const profile = {
   location: 'Remote · UTC +3 · Open to Relocate',
   email: 'ruslan.korolev29@gmail.com',
   telegram: 'https://t.me/infinitybuddha',
+  // Telegram deep-link pre-filled with a project intro — primary freelance CTA
+  telegramProject: 'https://t.me/infinitybuddha?text=Hi%20Ruslan%2C%20I%20have%20a%20project%3A%20',
   github: 'https://github.com/infinitybuddha29',
   linkedin: 'https://linkedin.com/in/ruslan-korolev-frontend',
   about: `8+ years building data-heavy dashboards, complex forms and design systems for US and international product teams`,
@@ -66,19 +68,41 @@ export const experience = [
 
 export const projects = [
   {
-    name: 'Telegram sticker converter',
+    name: 'gpt-56.ru',
+    tagline: 'AI chat product' as string | null,
     description:
-      'Convert animated WebP/GIF/MP4 to Telegram-ready VP9 WebM stickers (≤256KB, ≤3s, 512px)',
-    stack: ['React', 'TypeScript', 'Node.js', 'Claude AI'],
-    demo: null as string | null,
-    code: 'https://github.com/infinitybuddha29/telegram-sticker-converter',
+      'A Russian-language AI chat: free limited chat, Telegram login, credit balance and card payments. Built, shipped and operated solo — including 100+ programmatic SEO pages and the VPS it runs on.',
+    stack: ['Next.js', 'TypeScript', 'OpenAI API', 'Postgres', 'YooKassa', 'PM2'],
+    live: 'https://gpt-56.ru' as string | null,
+    code: null as string | null,
+    preview: '/work/gpt56.webp',
+  },
+  {
+    name: 'Telegram sticker converter',
+    tagline: null as string | null,
+    description:
+      "Turns animated WebP, GIF and MP4 into Telegram-ready VP9 WebM stickers that fit the platform's limits: under 256 KB, under 3 seconds, 512 px.",
+    stack: [
+      'Next.js 16',
+      'TypeScript',
+      'Node.js (worker)',
+      'BullMQ + Redis',
+      'ffmpeg / VP9',
+      'sharp',
+    ],
+    live: 'https://stickerbake.com' as string | null,
+    code: 'https://github.com/infinitybuddha29/telegram-sticker-converter' as string | null,
+    preview: '/work/telegram-stickers.webp',
   },
   {
     name: 'This site',
-    description: 'Hand-coded. No AI, no design systems. Yes, really.',
-    stack: ['React', 'TypeScript', 'CSS Modules', 'Vite'],
-    demo: null as string | null,
-    code: 'https://github.com/infinitybuddha29/korolev-cli-portfolioo',
+    tagline: null as string | null,
+    description:
+      "The site you're reading — a fast, accessible portfolio built with React, TypeScript and Vite. Two themes, full keyboard navigation, Lighthouse 100. The commit history is public.",
+    stack: ['React', 'TypeScript', 'Vite', 'CSS Modules'],
+    live: null as string | null,
+    code: 'https://github.com/infinitybuddha29/korolev-cli-portfolio' as string | null,
+    preview: '/work/this-site.webp',
   },
 ] as const;
 
