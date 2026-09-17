@@ -2,8 +2,12 @@ import { useEffect, useRef } from 'react';
 import { profile } from '@/data/profile';
 import styles from './Hero.module.css';
 
-const HERO_NAME = 'Ruslan Korolev';
-const HERO_ROLE = 'Frontend Engineer';
+/* Both the hero and /experience render this heading, and both used to hardcode
+   it — they were written in separate commits and drifted apart ("Frontend
+   Engineer" here, "Senior Frontend Engineer" there). profile is the one source
+   of truth; the structured data and the CV already agreed with it. */
+const HERO_NAME = profile.name;
+const HERO_ROLE = profile.title;
 
 export function Hero() {
   const nameRef = useRef<HTMLSpanElement>(null);
@@ -30,8 +34,18 @@ export function Hero() {
      * width we support, but a stray wrap would spill the copies over the
      * paragraphs below — so each line is still checked before it fires.
      */
-    const fitsOneLine = (line: HTMLSpanElement) =>
-      line.querySelector('[data-text]')?.getClientRects().length === 1;
+    const fitsOneLine = (line: HTMLSpanElement) => {
+      const glitch = line.querySelector('[data-text]');
+      if (!glitch) return false;
+      /*
+       * Measured by height, not by getClientRects().length: .glitch is
+       * inline-block, and an inline-block always reports exactly one rect no
+       * matter how many lines the text inside it wraps to. The rect count only
+       * worked back when the span was display:inline.
+       */
+      const lineHeight = parseFloat(getComputedStyle(glitch).lineHeight);
+      return glitch.getBoundingClientRect().height < lineHeight * 1.5;
+    };
 
     const burst = () => {
       // re-checked per burst, so resizing across the wrap point is handled

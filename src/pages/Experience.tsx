@@ -15,7 +15,9 @@ export const Experience = () => {
             ← back
           </a>
 
-          <h1 className={styles.title}>Ruslan Korolev — Senior Frontend Engineer</h1>
+          <h1 className={styles.title}>
+            {profile.name} — {profile.title}
+          </h1>
           <p className={styles.lead}>
             8+ years building data-heavy dashboards, complex forms and design systems for product
             teams in security, foodtech, edtech and fintech.

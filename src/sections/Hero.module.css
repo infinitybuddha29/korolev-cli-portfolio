@@ -6,7 +6,11 @@
 
 .title {
   font-family: var(--font-mono);
-  font-size: clamp(1.75rem, 5.5vw, 2.5rem);
+  /* The floor used to be 1.75rem, at which point the font stopped shrinking
+     while the container kept going — "Senior Frontend Engineer" then overflowed
+     and wrapped on every phone. 5.5vw alone fits down to ~234px wide, so the
+     floor only guards absurdly narrow viewports now. */
+  font-size: clamp(1rem, 5.5vw, 2.5rem);
   font-weight: 500;
   line-height: 1.15;
   color: var(--color-text);
