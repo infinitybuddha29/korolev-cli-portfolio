@@ -98,7 +98,7 @@ export const projects = [
     name: 'This site',
     tagline: null as string | null,
     description:
-      "The site you're reading — a fast, accessible portfolio built with React, TypeScript and Vite. Two themes, full keyboard navigation, Lighthouse 100. The commit history is public.",
+      "The site you're reading — a fast, accessible portfolio built with React, TypeScript and Vite. Two themes, full keyboard navigation, Lighthouse 100.",
     stack: ['React', 'TypeScript', 'Vite', 'CSS Modules'],
     live: null as string | null,
     code: 'https://github.com/infinitybuddha29/korolev-cli-portfolio' as string | null,
